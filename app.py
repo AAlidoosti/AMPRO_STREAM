@@ -5,14 +5,13 @@ from flask import Flask, Response
 app = Flask(__name__)
 
 # ====== CHANGE THIS TO ANY WEBPAGE URL YOU WANT ======
-TARGET_URL = "https://wttr.in/Manila?png"  # Clean, text-based weather image for testing
+TARGET_URL = "https://wttr.in/Manila?png"  
 
 @app.route('/shot.jpg')
 def single_frame():
     try:
-        # We use a free, public screenshot API to convert the webpage to an image cleanly
-        # This prevents Render from crashing due to high memory usage
-        api_url = f"https://image.thum.io/get/width/320/crop/600/maxAge/1/{TARGET_URL}"
+        # Optimized width/height and compressed quality to fit ESP32 memory perfectly
+        api_url = f"https://image.thum.io/get/width/320/crop/240/quality/50/maxAge/1/{TARGET_URL}"
         
         response = requests.get(api_url, timeout=10)
         
